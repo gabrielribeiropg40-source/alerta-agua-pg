@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import CreateReport from './pages/CreateReport';
+import CreateWaterShortage from './pages/CreateWaterShortage';
 import ReportDetail from './pages/ReportDetail';
 import Admin from './pages/Admin'; // Legacy admin
 import AdminLogin from './pages/AdminLogin';
@@ -25,6 +26,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/denuncia/nova" element={<CreateReport />} />
+              <Route path="/falta-agua/nova" element={<CreateWaterShortage />} />
               <Route path="/denuncia/:id" element={<ReportDetail />} />
               <Route path="/admin" element={<Admin />} />
             </Routes>

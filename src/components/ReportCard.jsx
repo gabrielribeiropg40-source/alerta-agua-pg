@@ -1,5 +1,5 @@
 import React from 'react';
-import { Share2, MapPin, Calendar, Activity } from 'lucide-react';
+import { Share2, MapPin, Calendar, Activity, AlertTriangle, DropletOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function ReportCard({ report }) {
@@ -18,9 +18,15 @@ export default function ReportCard({ report }) {
   return (
     <div className="card report-card">
       <div className="report-header">
-        <span className="report-badge" data-color={report.cor_agua}>
-          <Activity size={14} /> Cor: {report.cor_agua || 'Não informada'}
-        </span>
+        {report.tipo === 'falta_agua' ? (
+          <span className="report-badge" style={{ backgroundColor: '#ea580c', color: 'white' }}>
+            <DropletOff size={14} /> Falta de Água
+          </span>
+        ) : (
+          <span className="report-badge" data-color={report.cor_agua}>
+            <Activity size={14} /> Cor: {report.cor_agua || 'Não informada'}
+          </span>
+        )}
         <span className="report-date">
           <Calendar size={14} /> {new Date(report.data).toLocaleDateString('pt-BR')}
         </span>

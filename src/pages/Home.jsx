@@ -4,13 +4,14 @@ import Map from '../components/Map';
 import ReportCard from '../components/ReportCard';
 import SEO from '../components/SEO';
 import { dbReports } from '../services/db';
-import { checkRegionalAlerts, getTop10Neighborhoods } from '../services/analysis';
-import { AlertTriangle, TrendingUp } from 'lucide-react';
+import { checkRegionalAlerts, getTop10Neighborhoods, getTopWaterShortageNeighborhoods } from '../services/analysis';
+import { AlertTriangle, TrendingUp, DropletOff } from 'lucide-react';
 
 export default function Home() {
   const [reports, setReports] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [rankings, setRankings] = useState([]);
+  const [shortageRankings, setShortageRankings] = useState([]);
 
   useEffect(() => {
     // Load data from mock DB
@@ -22,6 +23,7 @@ export default function Home() {
     // Check Analysis
     setAlerts(checkRegionalAlerts());
     setRankings(getTop10Neighborhoods());
+    setShortageRankings(getTopWaterShortageNeighborhoods());
   }, []);
 
   return (
@@ -35,9 +37,12 @@ export default function Home() {
         <h1>Alerta Água PG</h1>
         <p>Ajude a monitorar a qualidade da água em Ponta Grossa</p>
         
-        <div className="hero-actions">
+        <div className="hero-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
            <Link to="/denuncia/nova" className="btn btn-primary btn-large">
-              Registrar problema de água
+              Registrar problema de qualidade
+           </Link>
+           <Link to="/falta-agua/nova" className="btn btn-secondary btn-large" style={{ backgroundColor: '#ea580c', color: 'white', border: 'none' }}>
+              Registrar falta de água
            </Link>
         </div>
       </section>
@@ -72,8 +77,8 @@ export default function Home() {
          </div>
 
          <div className="card ranking-container">
-            <h3><TrendingUp size={20} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> Bairros com mais registros</h3>
-            <div className="ranking-list">
+            <h3><TrendingUp size={20} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> Problemas de Qualidade</h3>
+            <div className="ranking-list" style={{ marginBottom: '2rem' }}>
               {rankings.map((rank, index) => (
                 <div key={rank.bairro} className="ranking-item">
                   <span className="rank-position">{index + 1}</span>
@@ -82,6 +87,18 @@ export default function Home() {
                 </div>
               ))}
               {rankings.length === 0 && <p className="text-muted">Sem dados suficientes.</p>}
+            </div>
+
+            <h3 style={{ color: '#ea580c' }}><DropletOff size={20} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> Maior Falta de Água</h3>
+            <div className="ranking-list">
+              {shortageRankings.map((rank, index) => (
+                <div key={rank.bairro} className="ranking-item">
+                  <span className="rank-position">{index + 1}</span>
+                  <span className="rank-name">{rank.bairro}</span>
+                  <span className="rank-count" style={{ color: '#ea580c' }}>{rank.count} registros</span>
+                </div>
+              ))}
+              {shortageRankings.length === 0 && <p className="text-muted">Nenhum registro no momento.</p>}
             </div>
          </div>
       </section>

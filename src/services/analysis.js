@@ -28,9 +28,23 @@ export const checkRegionalAlerts = () => {
   return criticalNeighborhoods;
 };
 
-// Also calculate Top 10 for ranking
+// Also calculate Top 10 for ranking (Water Quality)
 export const getTop10Neighborhoods = () => {
-    const reports = dbReports.getAll();
+    const reports = dbReports.getAll().filter(r => r.tipo !== 'falta_agua');
+    const counts = {};
+    reports.forEach(r => {
+      counts[r.bairro] = (counts[r.bairro] || 0) + 1;
+    });
+  
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([bairro, count]) => ({ bairro, count }));
+};
+
+// Calculate ranking for Water Shortages
+export const getTopWaterShortageNeighborhoods = () => {
+    const reports = dbReports.getAll().filter(r => r.tipo === 'falta_agua');
     const counts = {};
     reports.forEach(r => {
       counts[r.bairro] = (counts[r.bairro] || 0) + 1;
