@@ -1,9 +1,9 @@
-﻿import React from 'react';
+import React from 'react';
 import { Share2, MapPin, Calendar, Activity, AlertTriangle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function ReportCard({ report }) {
-  const shareText = `Moradores estÃ£o registrando problemas de qualidade da Ã¡gua em Ponta Grossa. Veja esta denÃºncia!`;
+  const shareText = `Moradores estão registrando problemas de qualidade da água em Ponta Grossa. Veja esta denúncia!`;
   const reportUrl = `${window.location.origin}/denuncia/${report.id}`;
 
   const handleShareWhatsApp = () => {
@@ -20,11 +20,11 @@ export default function ReportCard({ report }) {
       <div className="report-header">
         {report.tipo === 'falta_agua' ? (
           <span className="report-badge" style={{ backgroundColor: '#ea580c', color: 'white' }}>
-            <AlertCircle size={14} /> Falta de Ãgua
+            <AlertCircle size={14} /> Falta de Água
           </span>
         ) : (
           <span className="report-badge" data-color={report.cor_agua}>
-            <Activity size={14} /> Cor: {report.cor_agua || 'NÃ£o informada'}
+            <Activity size={14} /> Cor: {report.cor_agua || 'Não informada'}
           </span>
         )}
         <span className="report-date">
@@ -42,7 +42,7 @@ export default function ReportCard({ report }) {
         
         {report.foto_url && (
           <div className="report-image">
-            <img src={report.foto_url} alt={`Ãgua em ${report.bairro}`} loading="lazy" />
+            <img src={report.foto_url} alt={`Água em ${report.bairro}`} loading="lazy" />
           </div>
         )}
       </div>

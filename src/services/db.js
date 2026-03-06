@@ -1,19 +1,19 @@
-﻿import { supabase } from '../lib/supabaseClient';
+import { supabase } from '../lib/supabaseClient';
 
 const initialUsers = [
   { id: 'u1', nome: 'Admin', email: 'admin@alerta.com', senha: '123', bairro: 'Uvaranas', vila: 'Centro', data_cadastro: new Date().toISOString(), role: 'admin' },
 ];
 
 const initialReports = [
-  { id: 'd1', user_id: 'u1', bairro: 'Uvaranas', vila: 'Vila Marina', cor_agua: 'turva', cheiro: 'cheiro forte', descricao: 'A Ã¡gua estÃ¡ barrenta desde ontem.', foto_url: '', latitude: -25.0916, longitude: -50.1668, data: new Date().toISOString() }
+  { id: 'd1', user_id: 'u1', bairro: 'Uvaranas', vila: 'Vila Marina', cor_agua: 'turva', cheiro: 'cheiro forte', descricao: 'A água está barrenta desde ontem.', foto_url: '', latitude: -25.0916, longitude: -50.1668, data: new Date().toISOString() }
 ];
 
 export const BairrosPG = [
-  "Uvaranas", "Nova RÃºssia", "Neves", "Contorno", "CarÃ¡-CarÃ¡", 
+  "Uvaranas", "Nova Rússia", "Neves", "Contorno", "Cará-Cará", 
   "Oficinas", "Ronda", "Boa Vista", "Chapada", "Olarias", 
-  "ColÃ´nia Dona Luiza", "Jardim Carvalho", "Santa Paula", "Santa Terezinha", 
-  "SabarÃ¡", "Dom Bosco", "Vila Estrela", "Vila Cipa", "Vila Ricci", 
-  "Vila Coronel ClÃ¡udio", "Vila Marina", "Vila Palmeirinha", "Vila Ana Rita", 
+  "Colônia Dona Luiza", "Jardim Carvalho", "Santa Paula", "Santa Terezinha", 
+  "Sabará", "Dom Bosco", "Vila Estrela", "Vila Cipa", "Vila Ricci", 
+  "Vila Coronel Cláudio", "Vila Marina", "Vila Palmeirinha", "Vila Ana Rita", 
   "Vila DER", "Vila Hilgemberg"
 ];
 
@@ -37,7 +37,7 @@ export const dbUsers = {
     
     try {
       supabase.from('usuarios').insert([{
-        nome: newUser.nome || 'UsuÃ¡rio Default',
+        nome: newUser.nome || 'Usuário Default',
         email: newUser.email,
         senha: newUser.senha,
         created_at: newUser.data_cadastro
@@ -92,11 +92,11 @@ export const auth = {
       localStorage.setItem('alerta_agua_session', JSON.stringify(user));
       return { success: true, user };
     }
-    return { success: false, message: 'Credenciais invÃ¡lidas' };
+    return { success: false, message: 'Credenciais inválidas' };
   },
   register: (userData) => {
     if (dbUsers.findByEmail(userData.email)) {
-      return { success: false, message: 'Email jÃ¡ cadastrado' };
+      return { success: false, message: 'Email já cadastrado' };
     }
     const user = dbUsers.add(userData);
     localStorage.setItem('alerta_agua_session', JSON.stringify(user));
