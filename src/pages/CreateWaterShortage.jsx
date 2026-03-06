@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { dbReports, BairrosPG, auth } from '../services/db';
 import SEO from '../components/SEO';
-import { DropletOff } from 'lucide-react';
-import { checkSpamLimit } from '../services/spamFilter';
+import { AlertCircle } from 'lucide-react';
+import { spamFilter } from '../services/spamFilter';
 
 export default function CreateWaterShortage() {
   const navigate = useNavigate();
@@ -25,8 +25,9 @@ export default function CreateWaterShortage() {
       return;
     }
 
-    if (!checkSpamLimit('falta_agua', user.id)) {
-      setError('Você atingiu o limite de registros ou postou muito rápido. Tente novamente mais tarde.');
+    const spamCheck = spamFilter.checkCanReport(user.id);
+    if (!spamCheck.allowed) {
+      setError(spamCheck.error);
       return;
     }
 
@@ -54,12 +55,12 @@ export default function CreateWaterShortage() {
 
   return (
     <div className="page-container" style={{ maxWidth: '600px' }}>
-      <SEO title="Registrar Falta de Água" />
+      <SEO title="Registrar Falta de Ãgua" />
       <div className="card shadow-md">
         <div style={{ textAlign: 'center', marginBottom: '1.5rem', color: '#ea580c' }}>
-            <DropletOff size={48} style={{ margin: '0 auto' }} />
-            <h1 style={{ fontSize: '1.5rem', marginTop: '0.5rem' }}>Registrar Falta de Água</h1>
-            <p className="text-muted">Informe as áreas afetadas pela falta de abastecimento.</p>
+            <AlertCircle size={48} style={{ margin: '0 auto' }} />
+            <h1 style={{ fontSize: '1.5rem', marginTop: '0.5rem' }}>Registrar Falta de Ãgua</h1>
+            <p className="text-muted">Informe as Ã¡reas afetadas pela falta de abastecimento.</p>
         </div>
 
         {error && <div className="alert-banner" style={{ marginBottom: '1.5rem' }}>{error}</div>}
@@ -75,22 +76,22 @@ export default function CreateWaterShortage() {
           </div>
 
           <div>
-            <label>Rua ou Localização exata</label>
-            <input type="text" required className="input-field" placeholder="Ex: Rua Balduíno Taques, 40" value={formData.rua_localizacao} onChange={e => setFormData({...formData, rua_localizacao: e.target.value})} />
+            <label>Rua ou LocalizaÃ§Ã£o exata</label>
+            <input type="text" required className="input-field" placeholder="Ex: Rua BalduÃ­no Taques, 40" value={formData.rua_localizacao} onChange={e => setFormData({...formData, rua_localizacao: e.target.value})} />
           </div>
 
           <div>
-            <label>Data de Início da Falta</label>
+            <label>Data de InÃ­cio da Falta</label>
             <input type="date" required className="input-field" value={formData.data} onChange={e => setFormData({...formData, data: e.target.value})} />
           </div>
 
           <div>
-            <label>Descrição do Problema</label>
-            <textarea required className="input-field" rows="3" placeholder="Ex: Sem água desde a manhã de hoje, caminhão pipa não passou." value={formData.descricao} onChange={e => setFormData({...formData, descricao: e.target.value})}></textarea>
+            <label>DescriÃ§Ã£o do Problema</label>
+            <textarea required className="input-field" rows="3" placeholder="Ex: Sem Ã¡gua desde a manhÃ£ de hoje, caminhÃ£o pipa nÃ£o passou." value={formData.descricao} onChange={e => setFormData({...formData, descricao: e.target.value})}></textarea>
           </div>
 
           <div className="alert-banner" style={{ fontSize: '0.85rem', backgroundColor: '#fff7ed', color: '#9a3412', borderColor: '#fed7aa' }}>
-            📍 O seu relato será exibido no mapa com a localização da ocorrência.
+            ðŸ“ O seu relato serÃ¡ exibido no mapa com a localizaÃ§Ã£o da ocorrÃªncia.
           </div>
 
           <button type="submit" className="btn btn-secondary block" style={{ backgroundColor: '#ea580c', color: 'white', border: 'none', padding: '1rem', fontSize: '1.1rem' }}>
@@ -101,3 +102,5 @@ export default function CreateWaterShortage() {
     </div>
   );
 }
+
+

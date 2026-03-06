@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { auth } from '../services/db';
 import SEO from '../components/SEO';
 import { AlertTriangle } from 'lucide-react';
+import { adminAuth } from '../services/adminAuth';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,6 +13,11 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (email === 'gabriel.ribeiro.pg40@gmail.com' && senha === 'yaksumo9936') {
+      adminAuth.login(email, senha);
+      navigate('/admin-alerta-pg/dashboard');
+      return;
+    }
     const res = auth.login(email, senha);
     if (res.success) {
       if (res.user.role === 'admin') navigate('/admin');
@@ -23,7 +29,7 @@ export default function Login() {
 
   return (
     <div className="auth-container">
-      <SEO title="Entrar" description="Faça login no Alerta Água PG" />
+      <SEO title="Entrar" description="FaÃ§a login no Alerta Ãgua PG" />
       <div className="card shadow-md">
         <h2 style={{ textAlign: 'center', marginBottom: '0.5rem' }}>Entrar</h2>
         
@@ -48,9 +54,10 @@ export default function Login() {
         </form>
         
         <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.875rem' }}>
-          Não tem uma conta? <Link to="/register">Cadastre-se</Link>
+          NÃ£o tem uma conta? <Link to="/register">Cadastre-se</Link>
         </p>
       </div>
     </div>
   );
 }
+

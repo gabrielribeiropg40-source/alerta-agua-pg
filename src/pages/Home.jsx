@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Map from '../components/Map';
 import ReportCard from '../components/ReportCard';
 import SEO from '../components/SEO';
 import { dbReports } from '../services/db';
 import { checkRegionalAlerts, getTop10Neighborhoods, getTopWaterShortageNeighborhoods } from '../services/analysis';
-import { AlertTriangle, TrendingUp, DropletOff } from 'lucide-react';
+import { AlertTriangle, TrendingUp, AlertCircle } from 'lucide-react';
 
 export default function Home() {
   const [reports, setReports] = useState([]);
@@ -29,20 +29,20 @@ export default function Home() {
   return (
     <div className="page-container">
       <SEO 
-        title="Início" 
-        description="Portal cidadão para monitoramento de água. Veja denúncias recentes e ajude a mapear a qualidade da água em Ponta Grossa." 
+        title="InÃ­cio" 
+        description="Portal cidadÃ£o para monitoramento de Ã¡gua. Veja denÃºncias recentes e ajude a mapear a qualidade da Ã¡gua em Ponta Grossa." 
       />
       
       <section className="hero">
-        <h1>Alerta Água PG</h1>
-        <p>Ajude a monitorar a qualidade da água em Ponta Grossa</p>
+        <h1>Alerta Ãgua PG</h1>
+        <p>Ajude a monitorar a qualidade da Ã¡gua em Ponta Grossa</p>
         
         <div className="hero-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
            <Link to="/denuncia/nova" className="btn btn-primary btn-large">
               Registrar problema de qualidade
            </Link>
            <Link to="/falta-agua/nova" className="btn btn-secondary btn-large" style={{ backgroundColor: '#ea580c', color: 'white', border: 'none' }}>
-              Registrar falta de água
+              Registrar falta de Ã¡gua
            </Link>
         </div>
       </section>
@@ -51,7 +51,7 @@ export default function Home() {
         <div className="alert-banner">
           <AlertTriangle size={24} />
           <div>
-            <strong>ALERTA:</strong> Concentração de problemas detectada nas últimas horas em: 
+            <strong>ALERTA:</strong> ConcentraÃ§Ã£o de problemas detectada nas Ãºltimas horas em: 
             {' ' + alerts.join(', ')}.
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function Home() {
       
       <section className="dashboard-grid">
          <div className="card map-container" style={{ padding: '0.5rem' }}>
-            <h3 style={{ padding: '1rem' }}>Mapa de Ocorrências</h3>
+            <h3 style={{ padding: '1rem' }}>Mapa de OcorrÃªncias</h3>
             <Map reports={reports} alerts={alerts} />
          </div>
 
@@ -67,7 +67,7 @@ export default function Home() {
             <h3>Feed Recente</h3>
             <div className="feed-list">
               {reports.length === 0 ? (
-                <p className="text-muted">Nenhuma denúncia registrada ainda.</p>
+                <p className="text-muted">Nenhuma denÃºncia registrada ainda.</p>
               ) : (
                 reports.slice(0, 10).map(report => (
                   <ReportCard key={report.id} report={report} />
@@ -83,13 +83,13 @@ export default function Home() {
                 <div key={rank.bairro} className="ranking-item">
                   <span className="rank-position">{index + 1}</span>
                   <span className="rank-name">{rank.bairro}</span>
-                  <span className="rank-count">{rank.count} denúncias</span>
+                  <span className="rank-count">{rank.count} denÃºncias</span>
                 </div>
               ))}
               {rankings.length === 0 && <p className="text-muted">Sem dados suficientes.</p>}
             </div>
 
-            <h3 style={{ color: '#ea580c' }}><DropletOff size={20} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> Maior Falta de Água</h3>
+            <h3 style={{ color: '#ea580c' }}><AlertCircle size={20} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> Maior Falta de Ãgua</h3>
             <div className="ranking-list">
               {shortageRankings.map((rank, index) => (
                 <div key={rank.bairro} className="ranking-item">
@@ -105,3 +105,4 @@ export default function Home() {
     </div>
   );
 }
+
